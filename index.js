@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.post('/api/contact', async (req, res) => {
+app.post("/api/contact", async (req, res) => {
 
 	const AGE_FIELD_ID = 1024347;
 	const BIRTH_DATE_ID = 1031149;
@@ -23,18 +23,18 @@ app.post('/api/contact', async (req, res) => {
 		const updatedAge = getAge(birthDate);
 		
 		const updatedUsers = [{
-			id: parseInt(user.id),
+			id: Number(user.id),
 			custom_fields_values: [
 				utils.makeField(AGE_FIELD_ID, updatedAge)
 			]
 		}];
 
-		if (userAge != updatedAge) {
-			const response = await api.updateContacts(updatedUsers);
+		if (Number(userAge) !== updatedAge) {
+			api.updateContacts(updatedUsers);
 		}
 	}
 	
-	return res.json('ok');
-})
+	return res.json("ok");
+});
 
 app.listen(config.PORT, () => logger.debug("Server started on ", config.PORT));
