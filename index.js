@@ -21,6 +21,7 @@ app.post("/api/contact", async (req, res) => {
 	if (birthDate) {
 		const userAge = utils.getFieldValue(user.custom_fields, AGE_FIELD_ID);
 		const updatedAge = getAge(birthDate);
+		if (!updatedAge) return res.status(200);
 		
 		const updatedUsers = [{
 			id: Number(user.id),
