@@ -1,11 +1,13 @@
 function getAge(dateString) {
-	const date = dateString.split('.').map(val => parseInt(val))
+	const [birthDay, birthMonth, birthYear] = dateString
+		.split(/[^0-9]/g)
+		.map(val => parseInt(val));
 
 	const today = new Date();
-	const birthDate = new Date(date[2], date[1] - 1, date[0]); // 'month - 1' т.к. нумерация месяцев начинается с 0
+	const birthDate = new Date(birthYear, birthMonth - 1, birthDay); 
 	let age = today.getFullYear() - birthDate.getFullYear();
-	const m = today.getMonth() - birthDate.getMonth();
-	if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+	const month = today.getMonth() - birthDate.getMonth();
+	if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
 		age--;
 	}
 	return age;
